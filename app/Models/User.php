@@ -22,6 +22,7 @@ class User extends Authenticatable
         'timezone',
         'email',
         'password',
+        'is_synced',
     ];
 
     /**
@@ -45,5 +46,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::updating(function ($user) {
+            $user->is_synced = false;
+        });
     }
 }
