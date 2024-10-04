@@ -17,6 +17,13 @@ class UserFactory extends Factory
     protected static ?string $password;
 
     /**
+     * The available timezones.
+     *
+     * @var array
+     */
+    protected $timezones = ['CET', 'CST', 'GMT+1'];
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -24,7 +31,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'firstname' => fake()->name(),
+            'lastname' => fake()->name(),
+            'timezone' => $this->timezones[array_rand($this->timezones)],
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
